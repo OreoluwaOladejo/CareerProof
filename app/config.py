@@ -4,6 +4,11 @@ class Settings(BaseSettings):
     app_name: str = "CareerFlow"
     environment: str = "development"
     database_url: str
+    secret_key: str
+    # The signing algorithm for tokens.
+    algorithm: str = "HS256"
+    # How long a login token stays valid, in minutes.
+    access_token_expire_minutes: int = 60
 
     model_config = SettingsConfigDict(
         # Look for environment variables in this file.
@@ -13,6 +18,7 @@ class Settings(BaseSettings):
           # Ignore extra variables in .env that we haven't
         # defined in this Settings class yet.
         extra="ignore",
+    
     )
 settings =Settings()
 
