@@ -1,0 +1,15 @@
+# Secrets. NEVER commit these.
+.env
+
+# Virtual environment (large, and recreated from requirements.txt)
+venv/
+.venv/
+
+# Python junk
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Editor and OS files
+.vscode/
+.DS_Store
