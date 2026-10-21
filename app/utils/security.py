@@ -43,7 +43,7 @@ def create_access_token(user_id: int, expires_delta: timedelta | None = None) ->
         "exp": issued_at + expires_delta,
     }
     #This uses PyJWT to create the encoded token.
-    #payload supplies the claims.
+    #payload supplies the claims(Which is sub,iat and exp)
     #settings.secret_key supplies the secret used to sign the token.
     #algorithm=settings.algorithm specifies the signing algorithm, such as HS256.
     #Remember header.payload.signature
