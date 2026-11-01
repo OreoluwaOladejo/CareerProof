@@ -22,15 +22,23 @@ class InvalidCredentials(Exception):
     pass
 
 
-# A real Argon2 hash of a throwaway password, created once at startup.
-# Used to make unknown-email logins take as long as wrong-password logins.
+'''This line creates a fake password hash when the application starts.
+   Suppose an attacker tries to log in.  
+   Case A: The email doesn't exist. Your application could immediately reject the request.
+   Case B: The email exists, but the password is wrong. Your application must perform a password-hash verification, which takes some time.
+   If Case A consistently responds faster than Case B, an attacker might use response timing to guess which email addresses have accounts.
+   My code attempts to reduce that timing difference by performing a dummy password verification for unknown emails.
+'''
 _DUMMY_HASH = hash_password("not-a-real-password")
 
-
+'''-> User | None Genuinly just mean that that class must return 
+    Either a user or nothing '''
 def get_user_by_email(db: Session, email: str) -> User | None:
     # select(User).where(...) builds the query; db.scalar runs it and
     # returns the first matching User, or None if there is no match.
-    return db.scalar(select(User).where(User.email == email))
+    return db.scalar(
+        select(User).where(User.email == email)
+        )
 
 
 def register_user(db: Session, user_in: UserCreate) -> User:
